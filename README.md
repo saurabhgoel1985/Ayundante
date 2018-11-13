@@ -1,2 +1,4 @@
 # Ayundante
-Ayundante(Assistant) is my repository listing all the helper functions required for predictive modelling
+Ayundante(Assistant) is my repository listing all the helper functions usually required for predictive modelling.
+
+Will keep on adding functions here
