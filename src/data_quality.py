@@ -12,16 +12,14 @@ os.chdir("F:/Deep Learning/Ayundante/src")
 # Loading the input data set for data quality report generation
 input_data = pd.read_csv("../data/application_train.csv")
 
-# Storing the output storage path
-output_path = "F:/Deep Learning/Ayundante/outputs/"
 
-
-def data_type_info(data):
+def data_type_info(data, output_path):
     """
     This function will calculate the data type of each of the columns in input data
     and output the results in csv format
 
     :param data: input data
+    :param output_path: Path of the output directory (for e.g. output_path = "F:/Deep Learning/Ayundante/outputs/"
     :return csv file containing data types of each column for further exploration
     """
 
@@ -32,15 +30,16 @@ def data_type_info(data):
 
 
 # Testing the function with sample data
-data_type_info(input_data)
+data_type_info(input_data, "F:/Deep Learning/Ayundante/outputs/")
 
 
-def numeric_type_info(data):
+def numeric_type_info(data, output_path):
     """
     This function will calculate all the major information related to numeric variables like mean, median
     standard deviation, minimum, maximum, missing values etc.
 
     :param data: input data
+    :param output_path: Path of the output directory (for e.g. output_path = "F:/Deep Learning/Ayundante/outputs/"
     :return csv file containing information about numeric columns
     """
 
@@ -55,16 +54,17 @@ def numeric_type_info(data):
 
 
 # Testing the function with sample data
-numeric_type_info(input_data)
+numeric_type_info(input_data, "F:/Deep Learning/Ayundante/outputs/")
 
 
-def categorical_type_info(data, max_categories=10):
+def categorical_type_info(data, output_path, max_categories=10):
     """
     This function will return the frequency of top n categories of all the categorical column in the data set
     The function will work best in case its already filtered for categorical columns as there can be many
     columns in data set which can be categorical but are not useful top n category analysis (for.e.g ID variables)
 
     :param data: categorical_data: Data set containing possible categorical columns
+    :param output_path: Path of the output directory (for e.g. output_path = "F:/Deep Learning/Ayundante/outputs/"
     :param max_categories: Number of maximum categories per column to be expected in the outputs
     :return csv files containing top n categories for each column in different sheets
     """
@@ -78,4 +78,4 @@ def categorical_type_info(data, max_categories=10):
     writer.save()
 
 
-categorical_type_info(input_data)
+categorical_type_info(input_data, "F:/Deep Learning/Ayundante/outputs/")
