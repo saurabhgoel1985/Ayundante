@@ -79,4 +79,3 @@ def categorical_type_info(data, max_categories=10):
 
 
 categorical_type_info(input_data)
-
