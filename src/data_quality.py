@@ -79,3 +79,4 @@ def categorical_type_info(data, output_path, max_categories=10):
 
 
 categorical_type_info(input_data, "F:/Deep Learning/Ayundante/outputs/")
+
