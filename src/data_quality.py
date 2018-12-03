@@ -57,7 +57,7 @@ def numeric_type_info(data, output_path):
 numeric_type_info(input_data, "F:/Deep Learning/Ayundante/outputs/")
 
 
-def categorical_type_info(data, output_path, max_categories=10):
+def categorical_type_info(data, output_path, max_categories=10, n_unique_values=50):
     """
     This function will return the frequency of top n categories of all the categorical column in the data set
     The function will work best in case its already filtered for categorical columns as there can be many
@@ -66,17 +66,24 @@ def categorical_type_info(data, output_path, max_categories=10):
     :param data: categorical_data: Data set containing possible categorical columns
     :param output_path: Path of the output directory (for e.g. output_path = "F:/Deep Learning/Ayundante/outputs/"
     :param max_categories: Number of maximum categories per column to be expected in the outputs
-    :return csv files containing top n categories for each column in different sheets
+    :param n_unique_values: Maximum number of unique values in a variable to be considered for
+    using it in the output calculation
+    :return excel files containing top n categories for each column in different sheets
     """
 
     writer = pd.ExcelWriter(output_path + "categorical_value_counts.xls")
-    categorical_data = data.select_dtypes(exclude=[np.number])
-    for col in categorical_data.columns:
-        val_count = categorical_data[col].value_counts(dropna=False).fillna(0).head(max_categories).reset_index()
+    # categorical_data = data.select_dtypes(exclude=[np.number])
+    count_unique = pd.DataFrame(data.nunique()).reset_index()
+    count_unique.rename({0: "column_type", 'index': "col_name"}, axis=1, inplace=True)
+    count_unique = count_unique[count_unique['column_type'] <= n_unique_values]
+    required_col_list = list(count_unique['col_name'])
+
+    for col in required_col_list:
+        val_count = data[col].value_counts(dropna=False).fillna(0).head(max_categories).reset_index()
         val_count['%'] = val_count[col] / sum(val_count[col]) * 100
         val_count.to_excel(writer, sheet_name=col[:30])
     writer.save()
 
-
+# Testing the function with sample data
 categorical_type_info(input_data, "F:/Deep Learning/Ayundante/outputs/")
 
