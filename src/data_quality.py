@@ -72,14 +72,14 @@ def categorical_type_info(data, output_path, max_categories=10, n_unique_values=
     """
 
     writer = pd.ExcelWriter(output_path + "categorical_value_counts.xls")
-    categorical_data = data.select_dtypes(exclude=[np.number])
-    count_unique = pd.DataFrame(categorical_data.nunique()).reset_index()
+    # categorical_data = data.select_dtypes(exclude=[np.number])
+    count_unique = pd.DataFrame(data.nunique()).reset_index()
     count_unique.rename({0: "column_type", 'index': "col_name"}, axis=1, inplace=True)
     count_unique = count_unique[count_unique['column_type'] <= n_unique_values]
     required_col_list = list(count_unique['col_name'])
 
     for col in required_col_list:
-        val_count = categorical_data[col].value_counts(dropna=False).fillna(0).head(max_categories).reset_index()
+        val_count = data[col].value_counts(dropna=False).fillna(0).head(max_categories).reset_index()
         val_count['%'] = val_count[col] / sum(val_count[col]) * 100
         val_count.to_excel(writer, sheet_name=col[:30])
     writer.save()
