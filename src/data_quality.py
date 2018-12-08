@@ -47,7 +47,7 @@ def numeric_type_info(data, output_path):
     numeric_info = numeric_data.describe(percentiles=[0.01, 0.05, 0.1, 0.25, 0.5, 0.75, 0.9, 0.95, 0.99])
     numeric_info = numeric_info.T
     numeric_info['#missing'] = numeric_data.shape[0] - numeric_info['count']
-    numeric_info['missing %'] = (input_data.shape[0] - numeric_info['count']) / input_data.shape[0] * 100
+    numeric_info['missing %'] = (numeric_data.shape[0] - numeric_info['count']) / numeric_data.shape[0] * 100
     numeric_info['#unique'] = numeric_data.nunique()
     numeric_info['is_possible_id'] = np.where(numeric_info['count'] == numeric_info['#unique'], 1, 0)
     numeric_info.to_csv(output_path + "numeric_type_info.csv")
@@ -78,10 +78,10 @@ def categorical_type_info(data, output_path, max_categories=10, n_unique_values=
     count_unique = count_unique[count_unique['column_type'] <= n_unique_values]
     required_col_list = list(count_unique['col_name'])
 
-    for col in required_col_list:
+    for i, col in enumerate(required_col_list):
         val_count = data[col].value_counts(dropna=False).fillna(0).head(max_categories).reset_index()
         val_count['%'] = val_count[col] / sum(val_count[col]) * 100
-        val_count.to_excel(writer, sheet_name=col[:30])
+        val_count.to_excel(writer, sheet_name=col[:27]+'_'+repr(i))
     writer.save()
 
 # Testing the function with sample data
