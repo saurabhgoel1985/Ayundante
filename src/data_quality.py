@@ -87,4 +87,3 @@ def categorical_type_info(data, output_path, max_categories=10, n_unique_values=
 # Testing the function with sample data
 categorical_type_info(input_data, "F:/Deep Learning/Ayundante/outputs/")
 
-
